@@ -1,0 +1,22 @@
+[package]
+name = "lce-client"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[[bin]]
+name = "lce"
+path = "src/main.rs"
+
+[dependencies]
+lce-math.workspace = true
+lce-core.workspace = true
+lce-sim.workspace = true
+lce-render.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

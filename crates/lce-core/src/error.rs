@@ -1,0 +1,1 @@
+//! Crate-spanning error types.

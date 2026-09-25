@@ -1,0 +1,22 @@
+[package]
+name = "lce-render"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+lce-math.workspace = true
+lce-core.workspace = true
+lce-assets.workspace = true
+lce-world.workspace = true
+lce-entity.workspace = true
+lce-sim.workspace = true
+glam.workspace = true
+rayon.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

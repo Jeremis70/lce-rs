@@ -1,0 +1,18 @@
+[package]
+name = "lce-entity"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+lce-math.workspace = true
+lce-core.workspace = true
+lce-nbt.workspace = true
+lce-world.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

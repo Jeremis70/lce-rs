@@ -1,0 +1,36 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Jeremis70/lce-rs"
+
+[workspace.dependencies]
+lce-assets = { path = "crates/lce-assets", version = "0.1.0" }
+lce-client = { path = "crates/lce-client", version = "0.1.0" }
+lce-core = { path = "crates/lce-core", version = "0.1.0" }
+lce-entity = { path = "crates/lce-entity", version = "0.1.0" }
+lce-math = { path = "crates/lce-math", version = "0.1.0" }
+lce-nbt = { path = "crates/lce-nbt", version = "0.1.0" }
+lce-render = { path = "crates/lce-render", version = "0.1.0" }
+lce-sim = { path = "crates/lce-sim", version = "0.1.0" }
+lce-world = { path = "crates/lce-world", version = "0.1.0" }
+
+flate2 = "1.1"
+glam = "0.33.10"
+parking_lot = "0.12"
+rayon = "1.12"
+tracing = "0.1"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
