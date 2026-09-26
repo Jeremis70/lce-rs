@@ -1,4 +1,5 @@
-//! `Mth`: the 65536-entry sine lookup table, floor/clamp/angle-wrapping helpers.
+//! `Mth`: the 65536-entry sine lookup table, floor/clamp/angle-wrapping helpers,
+//! and a ranged random integer.
 //!
 //! # Float-to-integer conversion
 //!
@@ -10,6 +11,8 @@
 //! `floor(-1e10)` is `i32::MAX`: the conversion gives `i32::MIN`, and stepping
 //! down by one wraps. These results are part of the specified behaviour and
 //! are covered by the bit-exact test vectors.
+
+use crate::random::JavaRandom;
 
 /// π as used throughout the simulation: `3.141592654` rounded to single
 /// precision (bits `0x4049_0fdb`).
@@ -271,6 +274,23 @@ pub const fn clamp_f32(value: f32, min: f32, max: f32) -> f32 {
 #[must_use]
 pub const fn int_floor_div(a: i32, b: i32) -> i32 {
     if a < 0 { !(!a / b) } else { a / b }
+}
+
+/// A uniformly distributed integer in `min_inclusive..=max_inclusive`.
+///
+/// If `min_inclusive >= max_inclusive` this returns `min_inclusive` without
+/// drawing. Otherwise it is `random.next_int(max_inclusive - min_inclusive + 1)
+/// + min_inclusive`, all in wrapping `i32` arithmetic.
+///
+/// A range wider than `i32::MAX` values wraps the bound to zero or below, so
+/// per [`JavaRandom::next_int`] the result is `min_inclusive` after one draw.
+/// The full range `i32::MIN..=i32::MAX` is one such case.
+pub const fn next_int(random: &mut JavaRandom, min_inclusive: i32, max_inclusive: i32) -> i32 {
+    if min_inclusive >= max_inclusive {
+        return min_inclusive;
+    }
+    let bound = max_inclusive.wrapping_sub(min_inclusive).wrapping_add(1);
+    random.next_int(bound).wrapping_add(min_inclusive)
 }
 
 /// `input` degrees wrapped into `[-180, 180)`.
