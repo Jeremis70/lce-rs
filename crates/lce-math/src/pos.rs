@@ -224,7 +224,7 @@ impl TilePos {
     /// The tile containing the point `p`: each coordinate is floored with
     /// [`mth::floor`].
     #[must_use]
-    pub fn containing(p: Vec3) -> Self {
+    pub const fn containing(p: Vec3) -> Self {
         Self::new(mth::floor(p.x), mth::floor(p.y), mth::floor(p.z))
     }
 
