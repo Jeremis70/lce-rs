@@ -279,12 +279,14 @@ pub const fn int_floor_div(a: i32, b: i32) -> i32 {
 /// A uniformly distributed integer in `min_inclusive..=max_inclusive`.
 ///
 /// If `min_inclusive >= max_inclusive` this returns `min_inclusive` without
-/// drawing. Otherwise it is `random.next_int(max_inclusive - min_inclusive + 1)
-/// + min_inclusive`, all in wrapping `i32` arithmetic.
+/// drawing. Otherwise it is
+/// `random.next_int(max_inclusive - min_inclusive + 1) + min_inclusive`, all
+/// in wrapping `i32` arithmetic.
 ///
 /// A range wider than `i32::MAX` values wraps the bound to zero or below, so
 /// per [`JavaRandom::next_int`] the result is `min_inclusive` after one draw.
 /// The full range `i32::MIN..=i32::MAX` is one such case.
+#[must_use]
 pub const fn next_int(random: &mut JavaRandom, min_inclusive: i32, max_inclusive: i32) -> i32 {
     if min_inclusive >= max_inclusive {
         return min_inclusive;

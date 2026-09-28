@@ -55,6 +55,7 @@ pub fn total_weight<T: WeighedRandomItem>(items: &[T]) -> i32 {
 ///
 /// A `total_weight` of zero or less returns `None` without drawing, so an
 /// empty or all-zero `items` never advances `random`.
+#[must_use]
 pub fn random_item_with_total<'a, T: WeighedRandomItem>(
     random: &mut JavaRandom,
     items: &'a [T],
@@ -95,6 +96,7 @@ pub fn random_item_with_total<'a, T: WeighedRandomItem>(
 /// assert!(matches!(picked, Some("common" | "rare")));
 /// assert!(random_item::<Loot>(&mut random, &[]).is_none());
 /// ```
+#[must_use]
 pub fn random_item<'a, T: WeighedRandomItem>(
     random: &mut JavaRandom,
     items: &'a [T],

@@ -7,7 +7,7 @@ use lce_math::random::JavaRandom;
 /// A copy of `random` advanced by one 31-bit draw.
 fn after_one_draw(random: &JavaRandom) -> JavaRandom {
     let mut copy = random.clone();
-    copy.next_bits::<31>();
+    let _ = copy.next_bits::<31>();
     copy
 }
 
@@ -52,7 +52,7 @@ fn a_seed_equal_to_the_multiplier_starts_from_zero() {
 fn set_seed_restarts_the_sequence() {
     let mut r = JavaRandom::new(7);
     for _ in 0..10 {
-        r.next_long();
+        let _ = r.next_long();
     }
     r.set_seed(42);
     assert_eq!(r, JavaRandom::new(42));
@@ -202,7 +202,7 @@ fn gaussians_come_in_pairs_and_the_second_is_cached() {
     let mut r = JavaRandom::new(42);
     let first = r.next_gaussian();
     // Other draws in between leave the cached value in place.
-    r.next_int_unbounded();
+    let _ = r.next_int_unbounded();
     // Cloning carries the cache along.
     let mut twin = r.clone();
     let second = r.next_gaussian();
@@ -314,7 +314,7 @@ fn usable_in_const_context() {
     const FIRST: i32 = JavaRandom::new(42).next_int_unbounded();
     const DIGIT: i32 = {
         let mut r = JavaRandom::new(42);
-        r.next_int(10);
+        let _ = r.next_int(10);
         r.next_int(10)
     };
     const RANGED: i32 = mth::next_int(&mut JavaRandom::new(42), 10, 19);

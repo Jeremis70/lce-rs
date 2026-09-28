@@ -88,6 +88,7 @@ impl JavaRandom {
     /// # use lce_math::random::JavaRandom;
     /// let _ = JavaRandom::new(0).next_bits::<33>();
     /// ```
+    #[must_use]
     pub const fn next_bits<const BITS: u32>(&mut self) -> i32 {
         const { assert!(BITS >= 1 && BITS <= 32, "BITS must be in 1..=32") };
         self.state = step(self.state);
@@ -95,6 +96,7 @@ impl JavaRandom {
     }
 
     /// A uniformly distributed `i32` over its whole range: one 32-bit draw.
+    #[must_use]
     pub const fn next_int_unbounded(&mut self) -> i32 {
         self.next_bits::<32>()
     }
@@ -114,9 +116,10 @@ impl JavaRandom {
     /// A `bound` of zero passes the power-of-two test and so returns `0`
     /// after one draw. Negative bounds are treated the same way: `0` after one
     /// 31-bit draw. This never panics.
+    #[must_use]
     pub const fn next_int(&mut self, bound: i32) -> i32 {
         if bound <= 0 {
-            self.next_bits::<31>();
+            let _ = self.next_bits::<31>();
             return 0;
         }
         if bound & bound.wrapping_neg() == bound {
@@ -138,18 +141,21 @@ impl JavaRandom {
     /// value, so when it is negative it borrows from the first (wrapping).
     /// Not every `i64` can occur, since the result depends on only 48 bits of
     /// state.
+    #[must_use]
     pub const fn next_long(&mut self) -> i64 {
         let high = (self.next_bits::<32>() as i64) << 32;
         high.wrapping_add(self.next_bits::<32>() as i64)
     }
 
     /// `true` or `false` with equal probability: the top bit of one draw.
+    #[must_use]
     pub const fn next_boolean(&mut self) -> bool {
         self.next_bits::<1>() != 0
     }
 
     /// A uniformly distributed `f32` in `[0, 1)`: one 24-bit draw divided by
     /// `2²⁴` in single precision, exact.
+    #[must_use]
     pub const fn next_float(&mut self) -> f32 {
         self.next_bits::<24>() as f32 / (1u32 << 24) as f32
     }
@@ -158,6 +164,7 @@ impl JavaRandom {
     /// by 27 bits, plus a 27-bit draw, divided by `2⁵³`, exact.
     ///
     /// The draws are taken in that order.
+    #[must_use]
     pub const fn next_double(&mut self) -> f64 {
         let high = (self.next_bits::<26>() as i64) << 27;
         let low = self.next_bits::<27>() as i64;
@@ -190,6 +197,7 @@ impl JavaRandom {
     /// [`f64::ln`]. That is not guaranteed to be correctly rounded, so
     /// results can differ in the last bits between platforms. This is the only
     /// method here that is not bit-for-bit platform-independent.
+    #[must_use]
     pub fn next_gaussian(&mut self) -> f64 {
         if let Some(cached) = self.next_next_gaussian.take() {
             return cached;
