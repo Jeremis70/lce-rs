@@ -21,7 +21,7 @@ lce-sim = { path = "crates/lce-sim", version = "0.1.0" }
 lce-world = { path = "crates/lce-world", version = "0.1.0" }
 
 flate2 = "1.1"
-glam = "0.33.10"
+glam = "0.34.1"
 parking_lot = "0.12"
 rayon = "1.12"
 serde = { version = "1.0", features = ["derive"] }
